@@ -129,7 +129,15 @@ class App extends Component {
     )
     return (
       <a onClick={() => this.loadList(nowlist)}>
-        {nowlist.name}
+        <div className="black-mask">
+        </div>
+        <div className="text">
+          <h4>{nowlist.name}</h4>
+          <span className="chn-music">300</span>
+          <span className="chn-comment">18548</span>
+          <span className="chn-color">14737632</span>
+        </div>
+        
       </a>
     )
   }
@@ -188,14 +196,13 @@ class App extends Component {
           <div className="container">
             <Route exact={true} path="/" render={()=>(
               <Hotlist 
-                musicList={musicList}
                 musicMap={musicMap}
                 musicListAll={musicListAll}
                 renderPlayListBtn={this.renderPlayListBtn}
               />
             )} />
             <Route path="/s/:songId" render={({match})=>{
-              const selectMusicItem = _.find(musicList, o=>o.songid === parseInt(match.params.songId, 10))
+              const selectMusicItem = _.find(musicList.list, o=>o.songid === parseInt(match.params.songId, 10))
               return (
                 <Song 
                   playPause={this.playPause}
@@ -245,7 +252,6 @@ class App extends Component {
             setVolume={this.setVolume}
             toggleMuted={this.toggleMuted}
             muted={muted}
-            musicList={musicList}
             showList={this.showList}
             next={this.next}
             prev={this.prev}

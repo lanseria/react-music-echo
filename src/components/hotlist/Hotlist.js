@@ -5,10 +5,9 @@ import './Hotlist.styl'
 class Hotlist extends Component {
   
   render() {
-    const { musicList, musicMap, musicListAll,
+    const { musicMap, musicListAll,
       renderPlayListBtn } = this.props
     const mmap = musicMap.cussort
-    var musics = musicList.list.slice(0, 6);
     return (
       <div className="hot-main">
         <nav className="nav">
@@ -49,17 +48,8 @@ class Li extends Component {
     return (
       <li className="li-img">
       <div className="eu" id={mk}>
-        <div>
-          <div className="chn-left-content">
-            <div className="black-mask">
-            </div>
-            <div className="text">
-              <h4>{renderPlayListBtn(mk)}</h4>
-              <span className="chn-music">300</span>
-              <span className="chn-comment">18548</span>
-              <span className="chn-color">14737632</span>
-            </div>
-          </div>
+        <div className="chn-left-content">
+          {renderPlayListBtn(mk)}
         </div>
         <div className="chn-right-content">
           <h1>热门歌曲</h1>
