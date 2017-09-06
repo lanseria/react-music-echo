@@ -71,20 +71,30 @@ class App extends Component {
     this.setState({ url: null, playing: false })
   }
   next = () => {
-    const {index, musicList} = this.state
-    if(index===musicList.length-1){
-      this.loadMusic(0)
+    var {index, musicList} = this.state
+    index++
+    if(index===musicList.list.length){
+      this.loadMusic(musicList.list[0])
+      index = 0
     }else{
-      this.loadMusic(musicList[index+1])
+      this.loadMusic(musicList.list[index])
     }
+    this.setState({
+      index: index
+    })
   }
   prev = () => {
-    const {index, musicList} = this.state
-    if(index===0){
-      this.loadMusic(musicList.length-1)
+    var {index, musicList} = this.state
+    index--
+    if(index===-1){
+      this.loadMusic(musicList.list[musicList.list.length-1])
+      index = musicList.list.length-1
     }else{
-      this.loadMusic(musicList[index-1])
+      this.loadMusic(musicList.list[index])
     }
+    this.setState({
+      index: index
+    })
   }
   setVolume = e => {
     this.setState({ volume: parseFloat(e.target.value) })
