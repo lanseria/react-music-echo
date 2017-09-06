@@ -1,0 +1,61 @@
+.song-main
+  margin: 10px 0
+  background: #fff
+  nav
+    background: #f4f4f4
+    box-shadow: 0 -1px 4px 0 rgba(0,0,0,.06);
+    height: 80px
+    line-height: 80px
+    a
+      margin-left: 40px
+      vertical-align: bottom
+      line-height: 80px
+      font-size: 18px
+      color: #999
+      &::before
+        margin-right: 20px
+        font-size: 20px
+        vertical-align: top;
+  .song-title
+    height: 80px
+    line-height: 80px
+    h4
+      font-size: 28px
+      margin-left: 40px
+  .song-bullets
+    width: 980px
+    height: 420px
+    position: relative
+    overflow: hidden
+    .bg-mask-wp
+      position: absolute
+      background-color: #fff
+      overflow: hidden
+      img
+        width: 980px
+        filter: blur(18px)
+      .bg-mask
+        position: absolute
+        width: 100%
+        height: 100%
+        background: rgba(255,255,255,.6)
+        box-shadow: inset 0 0 6px rgba(0,0,0,.06)
+    .song-cover
+      position: absolute
+      top: 50%
+      left: 60px
+      margin-top: -150px
+      border: 1px solid #999
+      background: #fff
+      img
+        margin: 5px
+        width: 300px
+        height: 300px
+.control
+  display: flex
+  .play
+    flex: 0 0 36px
+    box-sizing: border-box
+    font-size: 32px
+    padding: 4px 10px
+    cursor: pointer
