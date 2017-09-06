@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## 效果图
 
-造 app-echo[echo](www.app-echo.com) 的轮子
+造 app-echo[echo](http://www.app-echo.com) 的轮子
 ![echo](./docs/img/5.png)
 
 歌曲页面
