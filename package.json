@@ -1,6 +1,7 @@
 {
   "name": "react-music",
   "version": "1.0.0",
+  "git": "https://github.com/Lanseria/react-music-echo",
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.2",

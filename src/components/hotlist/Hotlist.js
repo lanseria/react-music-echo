@@ -48,7 +48,7 @@ class Li extends Component {
     return (
       <li className="li-img">
       <div className="eu" id={mk}>
-        <div className="chn-left-content">
+        <div className="chn-left-content" style={{background: `url(${musics[musics.length-1].albumpic_big})`}}>
           {renderPlayListBtn(mk)}
         </div>
         <div className="chn-right-content">

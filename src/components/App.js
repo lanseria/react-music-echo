@@ -49,10 +49,13 @@ class App extends Component {
       musicList: nowlist
     })
     this.loadMusic(nowlist.list[0])
+    this.setState({
+      index: 0
+    })
   }
   loadMusic = (nowmusic) => {
-    const { musicList} = this.state
-    const index = _.findIndex(musicList, o=>
+    const { musicList } = this.state
+    const index = _.findIndex(musicList.list, o=>
       o.songid===nowmusic.songid
     )
     this.setState({
@@ -75,26 +78,18 @@ class App extends Component {
     index++
     if(index===musicList.list.length){
       this.loadMusic(musicList.list[0])
-      index = 0
     }else{
       this.loadMusic(musicList.list[index])
     }
-    this.setState({
-      index: index
-    })
   }
   prev = () => {
     var {index, musicList} = this.state
     index--
     if(index===-1){
       this.loadMusic(musicList.list[musicList.list.length-1])
-      index = musicList.list.length-1
     }else{
       this.loadMusic(musicList.list[index])
     }
-    this.setState({
-      index: index
-    })
   }
   setVolume = e => {
     this.setState({ volume: parseFloat(e.target.value) })
@@ -118,9 +113,16 @@ class App extends Component {
       this.setState(state)
     }
   }
-  showList = () => {
+  showList = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     this.setState({
       showList: !this.state.showList
+    })
+  }
+  hiddenlist = (e) => {
+    this.setState({
+      showList: false
     })
   }
   renderLoadButton = (songid) => {
@@ -147,7 +149,6 @@ class App extends Component {
           <span className="chn-comment">18548</span>
           <span className="chn-color">14737632</span>
         </div>
-        
       </a>
     )
   }
@@ -201,7 +202,7 @@ class App extends Component {
     } = this.state
     return (
       <Router>
-        <div className="App">
+        <div className="App" onClick={this.hiddenlist}>
           <Header songid={currentMusicItem.songid}/>
           <div className="container">
             <Route exact={true} path="/" render={()=>(

@@ -2,14 +2,40 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom' 
 
 import Progress from '../progress/Progress'
+import Lyric from '../lyric/Lyric'
 import './Song.styl'
 
 class Song extends Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       songword: ""
+    }
+  }
+  
+  fetchData = (musicid) => {
+    fetch('https://ali-qqmusic.showapi.com/song-word?musicid='+musicid, {
+      headers: {
+        Authorization: 'APPCODE e909b37820ee487b9bd18592824fd666'
+      }
+    }).then(res=>res.json())
+      .then(res=>{
+        this.setState({
+          songword: HtmlDecode(res.showapi_res_body.lyric)
+        })
+      })
+  }
+  componentDidMount = () => {
+    this.fetchData(this.props.selectMusicItem.songid)
+  }
+  
   render() {
     const {selectMusicItem, playPause, 
       playing, played, onSeekMouseDown, 
       onSeekChange, onSeekMouseUp, currentMusicItem,
       renderPlayButton} = this.props
+      const {songword} = this.state
     return (
       <div className="song-main">
         <nav>
@@ -29,6 +55,13 @@ class Song extends Component {
           </div>  
           <div className="song-cover">
             <img src={selectMusicItem.albumpic_big} alt={selectMusicItem.songname} />
+          </div>
+          <div className="song-word">
+            {songword && (
+              <Lyric 
+                text={songword}
+              />
+            )}
           </div>
         </div>
         {currentMusicItem.songid===selectMusicItem.songid ? (
@@ -52,4 +85,11 @@ class Song extends Component {
     )
   }
 }
+
+function HtmlDecode(str) { 
+  var t = document.createElement("div"); 
+  t.innerHTML = str; 
+  return t.innerText;
+}
+
 export default Song
