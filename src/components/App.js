@@ -55,8 +55,8 @@ class App extends Component {
   }
   loadMusic = (nowmusic) => {
     const { musicList } = this.state
-    const index = _.findIndex(musicList.list, o=>
-      o.songid===nowmusic.songid
+    const index = _.findIndex(musicList.list, o =>
+      o.songid === nowmusic.songid
     )
     this.setState({
       index,
@@ -74,20 +74,20 @@ class App extends Component {
     this.setState({ url: null, playing: false })
   }
   next = () => {
-    var {index, musicList} = this.state
+    var { index, musicList } = this.state
     index++
-    if(index===musicList.list.length){
+    if (index === musicList.list.length) {
       this.loadMusic(musicList.list[0])
-    }else{
+    } else {
       this.loadMusic(musicList.list[index])
     }
   }
   prev = () => {
-    var {index, musicList} = this.state
+    var { index, musicList } = this.state
     index--
-    if(index===-1){
-      this.loadMusic(musicList.list[musicList.list.length-1])
-    }else{
+    if (index === -1) {
+      this.loadMusic(musicList.list[musicList.list.length - 1])
+    } else {
       this.loadMusic(musicList.list[index])
     }
   }
@@ -126,8 +126,8 @@ class App extends Component {
     })
   }
   renderLoadButton = (songid) => {
-    const nowmusic = _.find(this.state.musicList.list, o=>
-      o.songid===parseInt(songid, 10)
+    const nowmusic = _.find(this.state.musicList.list, o =>
+      o.songid === parseInt(songid, 10)
     )
     return (
       <a onClick={() => this.loadMusic(nowmusic)}>
@@ -136,8 +136,8 @@ class App extends Component {
     )
   }
   renderPlayListBtn = (listid) => {
-    const nowlist = _.find(this.state.musicListAll, o=>
-      o.id===parseInt(listid, 10)
+    const nowlist = _.find(this.state.musicListAll, o =>
+      o.id === parseInt(listid, 10)
     )
     return (
       <a onClick={() => this.loadList(nowlist)}>
@@ -153,16 +153,16 @@ class App extends Component {
     )
   }
   renderPlayButton = (songid) => {
-    const nowmusic = _.find(this.state.musicList, o=>
-      o.songid===parseInt(songid, 10)
+    const nowmusic = _.find(this.state.musicList, o =>
+      o.songid === parseInt(songid, 10)
     )
     return (
-      <div onClick={() => this.loadMusic(nowmusic)}className={"play icon-play2"}>
+      <div onClick={() => this.loadMusic(nowmusic)} className={"play icon-play2"}>
       </div>
     )
   }
-  
-  
+
+
   componentDidMount = () => {
     this.setState({
       url: this.state.currentMusicItem.url
@@ -170,31 +170,32 @@ class App extends Component {
     this.fetchData()
   }
   componentWillUnmount = () => {
-    
+
   }
-  
+
   fetchData = () => {
     online_MUSIC_LIST.push(MUSIC_LIST)
     musicMap.cussort.map((m) => {
-      return fetch('https://ali-qqmusic.showapi.com/top?topid='+m.id, {
+      return fetch('https://ali-qqmusic.showapi.com/top?topid=' + m.id, {
         headers: {
           Authorization: 'APPCODE e909b37820ee487b9bd18592824fd666'
         }
       })
-      .then(res => res.json())
-      .then(res => {
-        online_MUSIC_LIST.push({
-          id:m.id,
-          name: m.name,
-          list:res.showapi_res_body.pagebean.songlist
+        .then(res => res.json())
+        .then(res => {
+          online_MUSIC_LIST.push({
+            id: m.id,
+            name: m.name,
+            list: res.showapi_res_body.pagebean.songlist
+          })
         })
-      })
+        .catch(e => { console.log(e) })
     })
     this.setState({
       musicListAll: online_MUSIC_LIST
     })
   }
-  render() {
+  render () {
     const {
       url, playing, volume, muted,
       played, duration, currentMusicItem,
@@ -203,32 +204,32 @@ class App extends Component {
     return (
       <Router>
         <div className="App" onClick={this.hiddenlist}>
-          <Header songid={currentMusicItem.songid}/>
+          <Header songid={currentMusicItem.songid} />
           <div className="container">
-            <Route exact={true} path="/" render={()=>(
-              <Hotlist 
+            <Route exact={true} path="/" render={() => (
+              <Hotlist
                 musicMap={musicMap}
                 musicListAll={musicListAll}
                 renderPlayListBtn={this.renderPlayListBtn}
               />
             )} />
-            <Route path="/s/:songId" render={({match})=>{
-              const selectMusicItem = _.find(musicList.list, o=>o.songid === parseInt(match.params.songId, 10))
+            <Route path="/s/:songId" render={({ match }) => {
+              const selectMusicItem = _.find(musicList.list, o => o.songid === parseInt(match.params.songId, 10))
               return (
-                <Song 
+                <Song
                   playPause={this.playPause}
                   playing={playing}
                   played={played}
                   onSeekMouseDown={this.onSeekMouseDown}
                   onSeekChange={this.onSeekChange}
                   onSeekMouseUp={this.onSeekMouseUp}
-                  selectMusicItem={selectMusicItem} 
+                  selectMusicItem={selectMusicItem}
                   currentMusicItem={currentMusicItem}
                   renderPlayButton={this.renderPlayButton}
                 />
               )
             }
-          } />
+            } />
           </div>
           <ReactPlayer
             ref={player => { this.player = player }}
@@ -267,7 +268,7 @@ class App extends Component {
             next={this.next}
             prev={this.prev}
           />
-          <Musiclist 
+          <Musiclist
             renderLoadButton={this.renderLoadButton}
             showList={showList}
             musicList={musicList}
